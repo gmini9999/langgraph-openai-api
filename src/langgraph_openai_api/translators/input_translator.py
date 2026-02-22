@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from typing import Any
 
-from langchain_core.messages import AIMessage, HumanMessage, SystemMessage
+from langchain_core.messages import AIMessage, BaseMessage, HumanMessage, SystemMessage
 
 from ..models.requests import CreateResponseRequest
 from .state_mapper import get_input_mapper
@@ -36,10 +36,10 @@ def _convert_messages(input_data: str | list[dict[str, Any]]) -> list:
     if isinstance(input_data, str):
         return [HumanMessage(content=input_data)]
 
-    messages = []
+    messages: list[BaseMessage] = []
     for msg in input_data:
         role = msg.get("role", "user")
-        content = _convert_content(msg.get("content", ""))
+        content: Any = _convert_content(msg.get("content", ""))
 
         if role == "user":
             messages.append(HumanMessage(content=content))
