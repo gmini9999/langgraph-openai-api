@@ -65,7 +65,7 @@ def translate_output(
                     args_str = json.dumps(args, ensure_ascii=False) if isinstance(args, dict) else str(args)
                     fc_item = FunctionCallOutputItem(
                         id=generate_function_call_id(),
-                        call_id=tc.get("id", ""),
+                        call_id=tc.get("id") or "",
                         name=tc.get("name", ""),
                         arguments=args_str,
                     )
